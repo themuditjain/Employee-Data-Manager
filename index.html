@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>AngularJS Website</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body ng-controller="myController">
+    <div class="container">
+        <h1>Employee Data</h1>
+        <div class="search-container">
+            <input type="text" ng-model="searchQuery" placeholder="Search">
+        </div>
+        <table>
+            <tr>
+                <th>S.No</th>
+                <th>Name</th>
+                <th>Organization Name</th>
+                <th>No. of Days Present</th>
+                <th>Salary</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="employee in filteredEmployees = (employees | filter:searchQuery)">
+                <td>{{ employee.sNo }}</td>
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.organization }}</td>
+                <td>{{ employee.daysPresent }}</td>
+                <td>{{ employee.salary }}</td>
+                <td><button ng-click="openModal(employee)">Modify</button></td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/ng-template" id="modal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Modify Employee</h3>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div>
+                    <label>Name:</label>
+                    <input type="text" ng-model="modifiedEmployee.name">
+                </div>
+                <div>
+                    <label>Organization Name:</label>
+                    <input type="text" ng-model="modifiedEmployee.organization">
+                </div>
+                <div>
+                    <label>No. of Days Present:</label>
+                    <input type="number" ng-model="modifiedEmployee.daysPresent" disabled>
+                </div>
+                <div>
+                    <label>Salary:</label>
+                    <input type="number" ng-model="modifiedEmployee.salary">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="applyChanges()">OK</button>
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+</body>
+</html>    
+
